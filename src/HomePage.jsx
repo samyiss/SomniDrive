@@ -103,39 +103,44 @@ export function HomePage() {
                 </p>
             </div>
 
-            <div className="columns is-3">
+            <div className="columns">
                 <div className="column is-8">
-                    <div className="box subtle-border">
+                    <div className="card subtle-border">
                         First column
                     </div>
                 </div>
                 <div className="column">
-                    <div className="box subtle-border">
+                    <div className="card subtle-border">
                         First column
                     </div>
                 </div>
             </div>
 
 
+            <div className="pt-6 pb-6">
+                <div className="has-text-left">
+                    <p className="subtitle has-text-weight-semibold has-text-black pb-4">
+                        Annexe : demi‑vies (h) — repères rapides
+                    </p>
+                </div>
 
-            <div className="columns pt-6 has-text-right">
-                <p className="subtitle pl-4 has-text-weight-semibold has-text-black">
-                    Annexe : demi‑vies (h) — repères rapides
-                </p>
+                <div className="columns is-variable is-2 is-multiline">
+                    {
+                        drugs.map((drug) => (
+                            <div className="column is-3 mb-auto" key={drug.id}>
+                                <div className="card subtle-border p-3">
+                                    <p className="has-text-weight-semibold has-text-black">{drug.name}</p>
+                                    <p className="has-text-grey is-size-7 mb-1">{drug.brand}</p>
+                                    <p className="has-text-black">
+                                        t<sub>1/2</sub>: {drug.halfLife}
+                                    </p>
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
             </div>
 
-            <div className="columns is-3">
-                <div className="column is-8">
-                    <div className="box subtle-border">
-                        First column
-                    </div>
-                </div>
-                <div className="column">
-                    <div className="box subtle-border">
-                        First column
-                    </div>
-                </div>
-            </div>
 
         </main>
     );
