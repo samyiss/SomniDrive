@@ -1,4 +1,9 @@
+import { FiInfo } from "react-icons/fi";
+
 export function HomePage() {
+
+    const color = "#ff1700"; // Bulma's "danger" color
+    const result = "ÉLEVÉ";
 
 
     const drugs = [
@@ -111,7 +116,40 @@ export function HomePage() {
                 </div>
                 <div className="column">
                     <div className="card subtle-border">
-                        First column
+                        <div className="columns is-vcentered">
+                            <div className="column is-1">
+                                <FiInfo className="has-text-weight-bold" size={20} />
+                            </div>
+
+                            <p className="column is-size-5 has-text-weight-semibold has-text-black pb-4">
+                                Résultat
+                            </p>
+                        </div>
+
+                        <div>
+                            <div className="result"   style={{ backgroundColor: color }}>
+                                <span className="has-text-white has-text-weight-semibold">
+                                    { result }
+                                </span>
+                            </div>
+
+                            <p className="title has-text-weight-bold has-text-black pt-4 pb-4">
+                                ON GOING...
+                            </p>
+
+                            <div className="subtle-border-sm is-size-6">
+                                <p style={{ fontSize: "15px" }}>
+                                    Seuils de catégorisation :
+                                    0–4 = faible;
+                                    5–8 = modéré (considérer délai > 8 h);
+                                    ≥ 9 = élevé — conduite déconseillée.
+                                </p>
+                            </div>
+                            <p className="subtitle is-size-7 has-text-grey pt-5">
+                                Cet outil n’est pas un avis médical définitif. Utiliser avec jugement clinique; tenir compte de la dose, co‑médication, comorbidités et contexte.
+                            </p>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -124,7 +162,7 @@ export function HomePage() {
                     </p>
                 </div>
 
-                <div className="columns is-variable is-2 is-multiline">
+                <div className="columns is-variable is-2 is-multiline is-1-mobile">
                     {
                         drugs.map((drug) => (
                             <div className="column is-3 mb-auto" key={drug.id}>

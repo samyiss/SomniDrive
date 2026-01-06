@@ -48,3 +48,19 @@
   border-radius: 12px;              /* smooth corners */
   padding: 1.25rem;
 }
+
+.subtle-border-sm {
+  border: 1px solid rgba(168, 168, 168, 0.35); /* Bulma grey */
+  background: white;
+  border-radius: 8px;              /* smooth corners */
+  padding: 1rem;
+}
+
+
+.result {
+  border-radius: 90px;
+  background-color: red;
+  padding: 0.15rem 0.75rem;
+  display: inline-block;
+}
+
