@@ -83,7 +83,7 @@ export function HomePage() {
 
 
     return (
-        <main className="p-8 has-background-white-ter">
+        <main className="p-5 has-background-white-ter">
             <div className="columns pt-6 has-text-centered">
                 <svg
                     className="pb-4"
@@ -116,7 +116,7 @@ export function HomePage() {
                 </div>
                 <div className="column">
                     <div className="card subtle-border">
-                        <div className="columns is-vcentered">
+                        <div className="columns is-vcentered is-mobile">
                             <div className="column is-1">
                                 <FiInfo className="has-text-weight-bold" size={20} />
                             </div>
@@ -133,9 +133,53 @@ export function HomePage() {
                                 </span>
                             </div>
 
-                            <p className="title has-text-weight-bold has-text-black pt-4 pb-4">
-                                ON GOING...
-                            </p>
+
+                                <div className="columns is-mobile pr-2 pt-5">
+                                    <div className="column">
+                                        <p className="has-text-black" style={{ fontSize: "15px" }}>
+                                            Âge
+                                        </p>
+                                        <p className="has-text-black" style={{ fontSize: "15px" }}>
+                                            IMC
+                                        </p>
+                                        <p className="has-text-black" style={{ fontSize: "15px" }}>
+                                            Médicament
+                                        </p>
+                                        <p className="has-text-black" style={{ fontSize: "15px" }}>
+                                            Prise &gt; 6h
+                                        </p>
+                                        <p className="has-text-black" style={{ fontSize: "15px" }}>
+                                            Atteinte hépatique
+                                        </p>
+                                        <p className="has-text-black" style={{ fontSize: "15px" }}>
+                                            Somnolence au volant (ATCD)
+                                        </p>
+                                    </div>
+                                    <div className="column is-1 pr-2">
+                                        <p className="has-text-black has-text-weight-semibold" style={{ fontSize: "15px" }}>
+                                            0
+                                        </p>
+                                        <p className="has-text-black has-text-weight-semibold" style={{ fontSize: "15px" }}>
+                                            0
+                                        </p>
+                                        <p className="has-text-black has-text-weight-semibold" style={{ fontSize: "15px" }}>
+                                            4
+                                        </p>
+                                        <p className="has-text-black has-text-weight-semibold" style={{ fontSize: "15px" }}>
+                                            0
+                                        </p>
+                                        <p className="has-text-black has-text-weight-semibold" style={{ fontSize: "15px" }}>
+                                            0
+                                        </p>
+                                        <p className="has-text-black has-text-weight-semibold" style={{ fontSize: "15px" }}>
+                                            0
+                                        </p>
+
+                                    </div>
+                                </div>
+
+
+
 
                             <div className="subtle-border-sm is-size-6">
                                 <p style={{ fontSize: "15px" }}>
@@ -156,16 +200,16 @@ export function HomePage() {
 
 
             <div className="pt-6 pb-6">
-                <div className="has-text-left">
+                <div className="has-text-left has-text-centered-mobile">
                     <p className="subtitle has-text-weight-semibold has-text-black pb-4">
                         Annexe : demi‑vies (h) — repères rapides
                     </p>
                 </div>
 
-                <div className="columns is-variable is-2 is-multiline is-1-mobile">
+                <div className="columns is-multiline is-mobile is-centered">
                     {
                         drugs.map((drug) => (
-                            <div className="column is-3 mb-auto" key={drug.id}>
+                            <div className="column is-3-desktop mb-auto is-5-mobile" key={drug.id}>
                                 <div className="card subtle-border p-3">
                                     <p className="has-text-weight-semibold has-text-black">{drug.name}</p>
                                     <p className="has-text-grey is-size-7 mb-1">{drug.brand}</p>
