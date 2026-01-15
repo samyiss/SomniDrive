@@ -1,10 +1,19 @@
 import { FiInfo } from "react-icons/fi";
+import {useState} from "react";
 
 export function HomePage() {
 
-    const color = "#ff1700"; // Bulma's "danger" color
-    const result = "ÉLEVÉ";
+    const color = "#23d160"; // Bulma's "danger" color
+    const result = "FAIBLE";
 
+    const results = [
+        { color: "#23d160", result: "FAIBLE" },
+        { color: "#ffdd57", result: "MODÉRÉ" },
+        { color: "#ff1700", result: "ÉLEVÉ" }
+    ]
+
+
+    const [getDrop, settDrop] = useState(false);
 
     const drugs = [
         {
@@ -110,15 +119,28 @@ export function HomePage() {
 
             <div className="columns">
                 <div className="column is-8">
-                    <div className="card subtle-border">
-                        First column
+                    <div className="card subtle-border" style={{ padding: "20px" }}>
+                        <div className="columns is-vcentered is-mobile">
+                            <div className="column is-half-desktop is-full-mobile">
+                                <p className="has-text-black has-text-weight-semibold" style={{fontSize: "15px"}}>
+                                    sexe
+                                </p>
+
+                                <div className="select is-fullwidth">
+                                    <select>
+                                        <option>Femme</option>
+                                        <option>Homme</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="column">
-                    <div className="card subtle-border">
+                <div className="card subtle-border">
                         <div className="columns is-vcentered is-mobile">
                             <div className="column is-1">
-                                <FiInfo className="has-text-weight-bold" size={20} />
+                                <FiInfo className="has-text-weight-bold" size={20}/>
                             </div>
 
                             <p className="column is-size-5 has-text-weight-semibold has-text-black pb-4">
@@ -127,7 +149,7 @@ export function HomePage() {
                         </div>
 
                         <div>
-                            <div className="result"   style={{ backgroundColor: color }}>
+                            <div className="result" style={{backgroundColor: color}}>
                                 <span className="has-text-white has-text-weight-semibold">
                                     { result }
                                 </span>
