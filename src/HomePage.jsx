@@ -1,5 +1,6 @@
 import { FiInfo } from "react-icons/fi";
 import {useState} from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function HomePage() {
 
@@ -14,6 +15,11 @@ export function HomePage() {
 
 
     const [getDrop, settDrop] = useState(false);
+
+    const options = ["Femme", "Homme"];
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState("Femme");
+
 
     const drugs = [
         {
@@ -120,19 +126,95 @@ export function HomePage() {
             <div className="columns">
                 <div className="column is-8">
                     <div className="card subtle-border" style={{ padding: "20px" }}>
-                        <div className="columns is-vcentered is-mobile">
+                        <div className="columns is-vcentered is-mobile is-multiline">
                             <div className="column is-half-desktop is-full-mobile">
                                 <p className="has-text-black has-text-weight-semibold" style={{fontSize: "15px"}}>
                                     sexe
                                 </p>
 
-                                <div className="select is-fullwidth">
-                                    <select>
-                                        <option>Femme</option>
-                                        <option>Homme</option>
-                                    </select>
-                                </div>
+                                <div className={`dropdown is-fullwidth ${open ? "is-active" : ""}`}>
+                                        <div className="dropdown-trigger is-fullwidth">
+                                            <button
+                                                className="button is-justify-content-space-between"
+                                                onClick={() => setOpen(!open)}
+                                            >
+                                                <span>{value}</span>
+                                                <span className="icon is-small">
+                                                <i className="fas fa-angle-down"></i>
+                                            </span>
+                                            </button>
+                                        </div>
+
+                                        <div className="dropdown-menu is-fullwidth">
+                                            <div className="dropdown-content is-fullwidth">
+                                                {["Femme", "Homme"].map(option => (
+                                                    <a
+                                                        key={option}
+                                                        className={`dropdown-item ${
+                                                            value === option ? "is-selected" : ""
+                                                        }`}
+                                                        onClick={() => {
+                                                            setValue(option);
+                                                            setOpen(false);
+                                                        }}
+                                                    >
+                                                        <span>{option}</span>
+
+                                                        {value === option && (
+                                                            <span className="icon has-text-success">
+                                                            <FontAwesomeIcon icon="fa-thin fa-check" />
+                                                        </span>
+                                                        )}
+                                                    </a>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+
                             </div>
+                            <div className="column is-half-desktop is-full-mobile">
+                                <p className="has-text-black has-text-weight-semibold pb-1" style={{fontSize: "15px"}}>
+                                    Âge (années)
+                                </p>
+
+                                <input className="input" type="number" placeholder="35" min="0"  step="1" />
+                                <p className="has-text-grey is-size-7 mb-1">Points âge: 0</p>
+                            </div>
+
+                            <div className="column is-half-desktop is-full-mobile">
+                                <p className="has-text-black has-text-weight-semibold pb-1" style={{fontSize: "15px"}}>
+                                    Âge (années)
+                                </p>
+
+                                <input className="input" type="number" placeholder="35" min="0"  step="1" />
+                                <p className="has-text-grey is-size-7 mb-1">Points âge: 0</p>
+                            </div>
+
+                            <div className="column is-half-desktop is-full-mobile">
+                                <p className="has-text-black has-text-weight-semibold pb-1" style={{fontSize: "15px"}}>
+                                    Taille (cm)
+                                </p>
+
+                                <input className="input" type="number" placeholder="165" min="0"  step="1" />
+                            </div>
+
+                            <div className="column is-half-desktop is-full-mobile">
+                                <p className="has-text-black has-text-weight-semibold pb-1" style={{fontSize: "15px"}}>
+                                    Poids (kg)
+                                </p>
+
+                                <input className="input" type="number" placeholder="62" min="0"  step="1" />
+                            </div>
+
+                            <div className="column is-half-desktop is-full-mobile">
+                                <p className="has-text-black has-text-weight-semibold pb-1" style={{fontSize: "15px"}}>
+                                    IMC (calculé)
+                                </p>
+
+                                <input className="input" type="number" placeholder="22.8" readOnly={true} />
+                                <p className="has-text-grey is-size-7 mb-1">Points IMC: 0</p>
+                            </div>
+
                         </div>
                     </div>
                 </div>
