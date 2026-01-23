@@ -1,6 +1,5 @@
 import { FiInfo } from "react-icons/fi";
 import {useEffect, useState} from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function HomePage() {
 
@@ -13,12 +12,164 @@ export function HomePage() {
         { color: "#ff1700", result: "ÉLEVÉ" }
     ]
 
+    const [getDrop, setDrop] = useState(false);
+
+    const options = ["Femme", "Homme"];
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState("Femme");
+
+
+    const otherDrugs = [
+        {
+            id: "benzodiazepine",
+            name: "Benzodiazépine",
+            minDose: 1,
+            maxDose: 4,
+        },
+        {
+            id: "zdrug",
+            name: "Z-drug",
+            minDose: 1,
+            maxDose: 2,
+        },
+        {
+            id: "antidepressant",
+            name: "Antidépresseur sédatif",
+            minDose: 2,
+            maxDose: 4,
+        },
+        {
+            id: "antagoniste",
+            name: "Antagoniste de l'orexine",
+            minDose: 3,
+            maxDose: 4,
+        },
+    ]
+
+    const drugs = [
+        {
+            id: "diazepam",
+            name: "Diazépam",
+            brand: "Valium",
+            halfLife: "20–50 h",
+            intensity: 4
+        },
+        {
+            id: "lorazepam",
+            name: "Lorazépam",
+            brand: "Ativan",
+            halfLife: "10–20 h",
+            intensity: 3
+        },
+        {
+            id: "temazepam",
+            name: "Témazépam",
+            brand: "Restoril",
+            halfLife: "8–15 h",
+            intensity: 2
+        },
+        {
+            id: "triazolam",
+            name: "Triazolam",
+            brand: "Halcion",
+            halfLife: "2–5 h",
+            intensity: 1
+        },
+        {
+            id: "zopiclone",
+            name: "Zopiclone",
+            brand: "Imovane",
+            halfLife: "5 h",
+            intensity: 2
+        },
+        {
+            id: "zolpidem",
+            name: "Zolpidem",
+            brand: "Stilnox",
+            halfLife: "2–3 h",
+            intensity: 1
+        },
+        {
+            id: "trazodone",
+            name: "Trazodone",
+            brand: "Desyrel",
+            halfLife: "5–9 h",
+            intensity: 2
+        },
+        {
+            id: "amitriptyline",
+            name: "Amitriptyline",
+            brand: "Elavil",
+            halfLife: "10–50 h",
+            intensity: 4
+        },
+        {
+            id: "mirtazapine",
+            name: "Mirtazapine",
+            brand: "Remeron",
+            halfLife: "20–40 h",
+            intensity: 4
+        },
+        {
+            id: "melatonin",
+            name: "Mélatonine",
+            brand: "—",
+            halfLife: "0.5 h (≈30 min)",
+            intensity: 0
+        },
+        {
+            id: "suvorexant",
+            name: "Suvorexant",
+            brand: "Belsomra",
+            halfLife: "12 h",
+            intensity: 3
+        },
+        {
+            id: "lemborexant",
+            name: "Lemborexant",
+            brand: "Dayvigo",
+            halfLife: "17–19 h",
+            intensity: 4
+        }
+    ];
+
+
 
     const [getAge, setAge] = useState(35);
     const [getHeight, setHeight] = useState(165);
     const [getWeight, setWeight] = useState(62);
     const [getIMC, setIMC] = useState(22.8);
     const [getimcP, setimcP] = useState(0);
+    const [selectedDrug, setSelectedDrug] = useState("");
+    
+    const [otherDrug, setOtherDrug] = useState(null);
+
+    const [getDrugIntensity, setDrugIntensity] = useState(0);
+
+
+
+    useEffect(() => {
+        setOtherDrug(
+            otherDrugs.find(drug => drug.id === selectedDrug) || null
+        );
+    }, [selectedDrug, otherDrugs]);
+
+    useEffect(() => {
+        const drug = drugs.find(
+            drug => drug.id === selectedDrug
+        );
+        if (drug) setDrugIntensity(drug.intensity)
+        if (!drug) {
+            const otherDrug = otherDrugs.find(
+                drug => drug.id === selectedDrug
+            );
+            if (otherDrug) {
+                // For other drugs, set intensity to midpoint of min and max dose
+                const intensity = Math.round((otherDrug.minDose + otherDrug.maxDose) / 2);
+                setDrugIntensity(intensity);
+            }
+        }
+    }, [drugs, selectedDrug]);
 
     useEffect(() => {
         const imc = Number((getWeight / (getHeight / 100) ** 2).toFixed(1));
@@ -33,95 +184,6 @@ export function HomePage() {
         if (imc >= 30) return 0;
         return 2;
     }
-
-
-    const [getDrop, setDrop] = useState(false);
-
-    const options = ["Femme", "Homme"];
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState("Femme");
-
-    useEffect(() => {
-        console.log(getAge);
-        console.log(getIMC);
-    })
-
-
-    const drugs = [
-        {
-            id: "diazepam",
-            name: "Diazépam",
-            brand: "Valium",
-            halfLife: "20–50 h"
-        },
-        {
-            id: "lorazepam",
-            name: "Lorazépam",
-            brand: "Ativan",
-            halfLife: "10–20 h"
-        },
-        {
-            id: "temazepam",
-            name: "Témazépam",
-            brand: "Restoril",
-            halfLife: "8–15 h"
-        },
-        {
-            id: "triazolam",
-            name: "Triazolam",
-            brand: "Halcion",
-            halfLife: "2–5 h"
-        },
-        {
-            id: "zopiclone",
-            name: "Zopiclone",
-            brand: "Imovane",
-            halfLife: "5 h"
-        },
-        {
-            id: "zolpidem",
-            name: "Zolpidem",
-            brand: "Stilnox",
-            halfLife: "2–3 h"
-        },
-        {
-            id: "trazodone",
-            name: "Trazodone",
-            brand: "Desyrel",
-            halfLife: "5–9 h"
-        },
-        {
-            id: "amitriptyline",
-            name: "Amitriptyline",
-            brand: "Elavil",
-            halfLife: "10–50 h"
-        },
-        {
-            id: "mirtazapine",
-            name: "Mirtazapine",
-            brand: "Remeron",
-            halfLife: "20–40 h"
-        },
-        {
-            id: "melatonin",
-            name: "Mélatonine",
-            brand: "—",
-            halfLife: "0.5 h (≈30 min)"
-        },
-        {
-            id: "suvorexant",
-            name: "Suvorexant",
-            brand: "Belsomra",
-            halfLife: "12 h"
-        },
-        {
-            id: "lemborexant",
-            name: "Lemborexant",
-            brand: "Dayvigo",
-            halfLife: "17–19 h"
-        }
-    ];
-
 
     return (
         <main className="p-5 has-background-white-ter">
@@ -152,53 +214,12 @@ export function HomePage() {
             <div className="columns">
                 <div className="column is-8">
                     <div className="card subtle-border" style={{ padding: "20px" }}>
-                        <div className="columns is-vcentered is-mobile is-multiline">
+                        <div className="columns is-centered is-mobile is-multiline">
                             <div className="column is-half-desktop is-half-tablet is-full-mobile">
-                                <p className="has-text-black has-text-weight-semibold" style={{fontSize: "15px"}}>
-                                    sexe
+                                <p className="has-text-black has-text-weight-semibold pb-1" style={{fontSize: "15px"}}>
+                                    Sexe
                                 </p>
 
-                                <div className={`dropdown is-fullwidth ${open ? "is-active" : ""}`}>
-                                    <div className="dropdown-trigger is-fullwidth">
-                                        <button
-                                            className="button is-justify-content-space-between"
-                                            onClick={() => setOpen(!open)}
-                                        >
-                                            <span>{value}</span>
-                                            <span className="icon is-small">
-                                                <i className="fas fa-angle-down"></i>
-                                            </span>
-                                        </button>
-                                    </div>
-
-                                    <div className="dropdown-menu is-fullwidth">
-                                        <div className="dropdown-content is-fullwidth">
-                                            {["Femme", "Homme"].map(option => (
-                                                <a
-                                                    key={option}
-                                                    className={`dropdown-item ${
-                                                        value === option ? "is-selected" : ""
-                                                    }`}
-                                                    onClick={() => {
-                                                        setValue(option);
-                                                        setOpen(false);
-                                                    }}
-                                                >
-                                                    <span>{option}</span>
-
-                                                    {value === option && (
-                                                        <span className="icon has-text-success">
-                                                            <FontAwesomeIcon icon="fa-thin fa-check"/>
-                                                        </span>
-                                                    )}
-                                                </a>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div className="field">
                                 <div className="control is-expanded">
                                     <div className="select is-fullwidth custom-select">
                                         <select>
@@ -207,6 +228,7 @@ export function HomePage() {
                                         </select>
                                     </div>
                                 </div>
+
                             </div>
 
                             <div className="column is-half-desktop is-half-tablet is-full-mobile">
@@ -245,7 +267,61 @@ export function HomePage() {
                             </div>
 
                         </div>
-                    </div>
+
+                        <div className="columns is-centered is-mobile is-multiline">
+                            <div className="column is-full">
+                                <p className="has-text-black has-text-weight-semibold pb-1" style={{fontSize: "15px"}}>
+                                    Médicament pris (au coucher)
+                                </p>
+
+                                <div className="control is-expanded">
+                                    <div className="select is-fullwidth custom-select">
+                                        <select value={selectedDrug} onChange={(e) => setSelectedDrug(e.target.value)}>
+                                            {
+                                                drugs.map((drug) => (
+                                                    <option key={drug.id} value={drug.id}>
+                                                        {drug.name}
+                                                        { drug.brand !== "—" && ` (${drug.brand})`}
+                                                    </option>
+                                                ))
+                                            }
+                                            {
+                                                otherDrugs.map((drug) => (
+                                                    <option key={drug.id} value={drug.id}>
+                                                        (Autre) {drug.name} — {drug.brand} choisir intensité
+                                                    </option>
+                                                ))
+                                            }
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            {
+                                otherDrug &&
+                                <div className="column is-full">
+                                    <p className="has-text-black has-text-weight-semibold pb-1" style={{fontSize: "15px"}}>
+                                        Intensité au sein de la classe
+                                    </p>
+                                    {
+                                            <input
+                                                className="slider"
+                                                type="range"
+                                                min={otherDrug.minDose}
+                                                max={otherDrug.maxDose}
+                                                step={1}
+                                                onChange={(e) => setDrugIntensity(e.target.value)}
+                                            />
+                                    }
+                                    <p className="has-text-grey is-size-7 mb-1">Points IMC: {getimcP}</p>
+                                    <p> selected {getDrugIntensity}</p>
+                                </div>
+                            }
+
+                        </div>
+
+                        </div>
                 </div>
                 <div className="column">
                 <div className="card subtle-border">
@@ -296,7 +372,7 @@ export function HomePage() {
                                             0
                                         </p>
                                         <p className="has-text-black has-text-weight-semibold" style={{ fontSize: "15px" }}>
-                                            4
+                                            {getDrugIntensity}
                                         </p>
                                         <p className="has-text-black has-text-weight-semibold" style={{ fontSize: "15px" }}>
                                             0
