@@ -144,14 +144,13 @@ export function HomePage() {
     
     const [otherDrug, setOtherDrug] = useState(null);
 
-    const [getDrugIntensity, setDrugIntensity] = useState(0);
+    const [getDrugIntensity, setDrugIntensity] = useState(4);
 
 
 
     useEffect(() => {
-        setOtherDrug(
-            otherDrugs.find(drug => drug.id === selectedDrug) || null
-        );
+        const drug = otherDrugs.find(drug => drug.id === selectedDrug) || null
+        setOtherDrug(drug);
     }, [selectedDrug, otherDrugs]);
 
     useEffect(() => {
@@ -159,16 +158,6 @@ export function HomePage() {
             drug => drug.id === selectedDrug
         );
         if (drug) setDrugIntensity(drug.intensity)
-        if (!drug) {
-            const otherDrug = otherDrugs.find(
-                drug => drug.id === selectedDrug
-            );
-            if (otherDrug) {
-                // For other drugs, set intensity to midpoint of min and max dose
-                const intensity = Math.round((otherDrug.minDose + otherDrug.maxDose) / 2);
-                setDrugIntensity(intensity);
-            }
-        }
     }, [drugs, selectedDrug]);
 
     useEffect(() => {
@@ -314,8 +303,7 @@ export function HomePage() {
                                                 onChange={(e) => setDrugIntensity(e.target.value)}
                                             />
                                     }
-                                    <p className="has-text-grey is-size-7 mb-1">Points IMC: {getimcP}</p>
-                                    <p> selected {getDrugIntensity}</p>
+                                    <p className="has-text-grey is-size-7 mb-1">Points médicament: {getDrugIntensity}</p>
                                 </div>
                             }
 
