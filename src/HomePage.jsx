@@ -12,11 +12,43 @@ export function HomePage() {
         { color: "#ff1700", result: "ÉLEVÉ" }
     ]
 
-    const [isOn, setIsOn] = useState(false);
+    const [isPrise, setIsPrise] = useState(false);
+    const [isHepatic, setIsHepatic] = useState(false);
+    const [isSleep, setIsSleep] = useState(false);
+    const [alcoholIntake, setAlcoholIntake] = useState(0);
+
+    const [pointPrise, setPointPrise] = useState(0);
+    const [pointHepatic, setPointHepatic] = useState(0);
+    const [pointSleep, setPointSleep] = useState(0);
+    const [pointAlcohol, setPointAlcohol] = useState(0);
+
+    useEffect(
+        () => {
+            if (isPrise) setPointPrise(4)
+            else if (!isPrise) setPointPrise(0)
+        }, [isPrise]
+    )
+
+    useEffect(
+        () => {
+            if (isHepatic) setPointHepatic(3)
+            else if (!isHepatic) setPointHepatic(0)
+        }, [isHepatic]
+    )
+
+    useEffect(
+        () => {
+            if (isSleep) setPointSleep(5)
+            else if (!isSleep) setPointSleep(0)
+        }, [isSleep]
+    )
+
     useEffect(() => {
-        console.log(isOn);
-    }, [isOn]);
-    const [getDrop, setDrop] = useState(false);
+        if (alcoholIntake > 1) setPointAlcohol(3)
+        else setPointAlcohol(0)
+    }, [alcoholIntake]);
+
+
 
     const options = ["Femme", "Homme"];
     const [open, setOpen] = useState(false);
@@ -25,9 +57,6 @@ export function HomePage() {
     const [pointAge, setPointAge] = useState(0);
     const [pointIMC, setPointIMC] = useState(0);
     const [pointMedicament, setPointMedicament] = useState(0);
-    const [pointPrise, setPointPrise] = useState(0);
-    const [pointHepatique, setPointHepatique] = useState(0);
-    const [pointSomnolence, setPointSomnolence] = useState(0);
 
     const [getAge, setAge] = useState(35);
     const [getHeight, setHeight] = useState(165);
@@ -334,10 +363,10 @@ export function HomePage() {
 
                         </div>
 
-                        <div className="columns is-mobile is-multiline is-vcentered">
+                        <div className="columns is-mobile is-multiline is-flexible">
                             <div className="column is-full-mobile">
-                                <div className="subtle-border-cm">
-                                    <div className="columns is-vcentered">
+                                <div className="subtle-border-sm flex">
+                                    <div className="columns is-vcentered is-mobile">
                                         <div className="column">
                                             <p className="has-text-black has-text-weight-semibold" style={{fontSize: "15px"}}> Prise &lt; 6 h avant conduite </p>
                                             <p className="has-text-grey is-size-7">+4 si oui</p>
@@ -346,8 +375,8 @@ export function HomePage() {
                                             <label className="switch">
                                                 <input
                                                     type="checkbox"
-                                                    checked={isOn}
-                                                    onChange={(e) => setIsOn(e.target.checked)}
+                                                    checked={isPrise}
+                                                    onChange={(e) => setIsPrise(e.target.checked)}
                                                 />
                                                 <span className="slide"></span>
                                             </label>
@@ -357,15 +386,60 @@ export function HomePage() {
                             </div>
 
                             <div className="column is-full-mobile">
-                                <div className="subtle-border-cm ">
+                                <div className="subtle-border-sm flex">
                                     <p className="has-text-black has-text-weight-semibold" style={{fontSize: "15px"}}> Consommation moyenne (verres/jour) </p>
                                     <input className="input" type="number" defaultValue="0" min="0" step="1"
-                                           onChange={(e) => setWeight(Number(e.target.value))}/>
+                                           onChange={(e) => setAlcoholIntake(Number(e.target.value))}/>
 
                                     <p className="has-text-grey is-size-7">Seuil: > 1 verres/j → +3</p>
                                 </div>
                             </div>
                         </div>
+
+                        <div className="columns is-mobile is-multiline is-flexible">
+                            <div className="column is-full-mobile">
+                                <div className="subtle-border-sm flex">
+                                    <div className="columns is-vcentered is-mobile">
+                                        <div className="column">
+                                            <p className="has-text-black has-text-weight-semibold" style={{fontSize: "15px"}}> Atteinte hépatique </p>
+                                            <p className="has-text-grey is-size-7">+3 si oui</p>
+                                        </div>
+                                        <div className="column is-narrow">
+                                            <label className="switch">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={isHepatic}
+                                                    onChange={(e) => setIsHepatic(e.target.checked)}
+                                                />
+                                                <span className="slide"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="column is-full-mobile">
+                                <div className="subtle-border-sm flex">
+                                    <div className="columns is-vcentered is-mobile">
+                                        <div className="column">
+                                            <p className="has-text-black has-text-weight-semibold" style={{fontSize: "15px"}}> ATCD de somnolence au volant </p>
+                                            <p className="has-text-grey is-size-7">+5 si oui</p>
+                                        </div>
+                                        <div className="column is-narrow">
+                                            <label className="switch">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={isSleep}
+                                                    onChange={(e) => setIsSleep(e.target.checked)}
+                                                />
+                                                <span className="slide"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
 
                     </div>
                 </div>
@@ -404,6 +478,9 @@ export function HomePage() {
                                             Prise &gt; 6h
                                         </p>
                                         <p className="has-text-black" style={{ fontSize: "15px" }}>
+                                            Alcool
+                                        </p>
+                                        <p className="has-text-black" style={{ fontSize: "15px" }}>
                                             Atteinte hépatique
                                         </p>
                                         <p className="has-text-black" style={{ fontSize: "15px" }}>
@@ -421,13 +498,16 @@ export function HomePage() {
                                             {getDrugIntensity} {/* Médicament*/}
                                         </p>
                                         <p className="has-text-black has-text-weight-semibold" style={{ fontSize: "15px" }}>
-                                            0 {/* Prise > 6h*/}
+                                            {pointPrise} {/* Prise > 6h*/}
                                         </p>
                                         <p className="has-text-black has-text-weight-semibold" style={{ fontSize: "15px" }}>
-                                            0 {/* Atteinte hépatique*/}
+                                            {pointAlcohol} {/* Alcool*/}
                                         </p>
                                         <p className="has-text-black has-text-weight-semibold" style={{ fontSize: "15px" }}>
-                                            0 {/* Somnolence au volant (ATCD)*/}
+                                            {pointHepatic} {/* Atteinte hépatique*/}
+                                        </p>
+                                        <p className="has-text-black has-text-weight-semibold" style={{ fontSize: "15px" }}>
+                                            {pointSleep} {/* Somnolence au volant (ATCD)*/}
                                         </p>
 
                                     </div>

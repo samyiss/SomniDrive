@@ -61,11 +61,12 @@
   padding: 1rem;
 }
 
-.subtle-border-cm {
-  border: 1px solid rgba(168, 168, 168, 0.35); /* Bulma grey */
-  background: white;
-  border-radius: 15px;              /* smooth corners */
-  padding: 1rem;
+.flex {
+  height: 100%;
+  display: flex;
+  flex-direction: column; /* Stacks children vertically */
+  justify-content: center; /* Centers content vertically within the card-body */
+
 }
 
 .result {
