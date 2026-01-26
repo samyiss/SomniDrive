@@ -12,11 +12,41 @@ export function HomePage() {
         { color: "#ff1700", result: "ÉLEVÉ" }
     ]
 
+    const [isOn, setIsOn] = useState(false);
+    useEffect(() => {
+        console.log(isOn);
+    }, [isOn]);
     const [getDrop, setDrop] = useState(false);
 
     const options = ["Femme", "Homme"];
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState("Femme");
+    
+    const [pointAge, setPointAge] = useState(0);
+    const [pointIMC, setPointIMC] = useState(0);
+    const [pointMedicament, setPointMedicament] = useState(0);
+    const [pointPrise, setPointPrise] = useState(0);
+    const [pointHepatique, setPointHepatique] = useState(0);
+    const [pointSomnolence, setPointSomnolence] = useState(0);
+
+    const [getAge, setAge] = useState(35);
+    const [getHeight, setHeight] = useState(165);
+    const [getWeight, setWeight] = useState(62);
+    const [getIMC, setIMC] = useState(22.8);
+    const [getimcP, setimcP] = useState(0);
+    const [selectedDrug, setSelectedDrug] = useState("");
+
+    const [otherDrug, setOtherDrug] = useState(null);
+
+    const [getDrugIntensity, setDrugIntensity] = useState(4);
+
+
+
+    useEffect(() => {
+        if (getAge < 55) setPointAge(0);
+        else if (getAge < 65) setPointAge(1);
+        else setPointAge(2);
+    }, [getAge]);
 
 
     const otherDrugs = [
@@ -135,16 +165,6 @@ export function HomePage() {
 
 
 
-    const [getAge, setAge] = useState(35);
-    const [getHeight, setHeight] = useState(165);
-    const [getWeight, setWeight] = useState(62);
-    const [getIMC, setIMC] = useState(22.8);
-    const [getimcP, setimcP] = useState(0);
-    const [selectedDrug, setSelectedDrug] = useState("");
-    
-    const [otherDrug, setOtherDrug] = useState(null);
-
-    const [getDrugIntensity, setDrugIntensity] = useState(4);
 
 
 
@@ -202,7 +222,7 @@ export function HomePage() {
 
             <div className="columns">
                 <div className="column is-8">
-                    <div className="card subtle-border" style={{ padding: "20px" }}>
+                    <div className="card subtle-border" style={{padding: "20px"}}>
                         <div className="columns is-centered is-mobile is-multiline">
                             <div className="column is-half-desktop is-half-tablet is-full-mobile">
                                 <p className="has-text-black has-text-weight-semibold pb-1" style={{fontSize: "15px"}}>
@@ -225,8 +245,9 @@ export function HomePage() {
                                     Âge (années)
                                 </p>
 
-                                <input className="input" type="number" defaultValue={getAge} min="0" step="1" onChange={(e) => setAge(Number(e.target.value))} />
-                                <p className="has-text-grey is-size-7 mb-1">Points âge: 0</p>
+                                <input className="input" type="number" defaultValue={getAge} min="0" step="1"
+                                       onChange={(e) => setAge(Number(e.target.value))}/>
+                                <p className="has-text-grey is-size-7 mb-1">Points âge: {pointAge}</p>
                             </div>
                         </div>
                         <div className="columns is-centered is-mobile is-multiline">
@@ -235,7 +256,8 @@ export function HomePage() {
                                     Taille (cm)
                                 </p>
 
-                                <input className="input" type="number" defaultValue={getHeight} min="0"  step="1" onChange={(e) => setHeight(Number(e.target.value))}/>
+                                <input className="input" type="number" defaultValue={getHeight} min="0" step="1"
+                                       onChange={(e) => setHeight(Number(e.target.value))}/>
                             </div>
 
                             <div className="column is-full-mobile">
@@ -243,7 +265,8 @@ export function HomePage() {
                                     Poids (kg)
                                 </p>
 
-                                <input className="input" type="number" defaultValue={getWeight} min="0"  step="1" onChange={(e) => setWeight(Number(e.target.value))}/>
+                                <input className="input" type="number" defaultValue={getWeight} min="0" step="1"
+                                       onChange={(e) => setWeight(Number(e.target.value))}/>
                             </div>
 
                             <div className="column is-full-mobile">
@@ -251,7 +274,7 @@ export function HomePage() {
                                     IMC (calculé)
                                 </p>
 
-                                <input className="input" type="number" value={getIMC} readOnly={true} />
+                                <input className="input" type="number" value={getIMC} readOnly={true}/>
                                 <p className="has-text-grey is-size-7 mb-1">Points IMC: {getimcP}</p>
                             </div>
 
@@ -264,13 +287,13 @@ export function HomePage() {
                                 </p>
 
                                 <div className="control is-expanded">
-                                    <div className="select is-fullwidth custom-select">
+                                    <div className="select is-fullwidth custom-select pb-1">
                                         <select value={selectedDrug} onChange={(e) => setSelectedDrug(e.target.value)}>
                                             {
                                                 drugs.map((drug) => (
                                                     <option key={drug.id} value={drug.id}>
                                                         {drug.name}
-                                                        { drug.brand !== "—" && ` (${drug.brand})`}
+                                                        {drug.brand !== "—" && ` (${drug.brand})`}
                                                     </option>
                                                 ))
                                             }
@@ -290,29 +313,64 @@ export function HomePage() {
                             {
                                 otherDrug &&
                                 <div className="column is-full">
-                                    <p className="has-text-black has-text-weight-semibold pb-1" style={{fontSize: "15px"}}>
+                                    <p className="has-text-black has-text-weight-semibold pb-1"
+                                       style={{fontSize: "15px"}}>
                                         Intensité au sein de la classe
                                     </p>
                                     {
-                                            <input
-                                                className="slider"
-                                                type="range"
-                                                min={otherDrug.minDose}
-                                                max={otherDrug.maxDose}
-                                                step={1}
-                                                onChange={(e) => setDrugIntensity(e.target.value)}
-                                            />
+                                        <input
+                                            className="slider"
+                                            type="range"
+                                            min={otherDrug.minDose}
+                                            max={otherDrug.maxDose}
+                                            step={1}
+                                            onChange={(e) => setDrugIntensity(e.target.value)}
+                                        />
                                     }
-                                    <p className="has-text-grey is-size-7 mb-1">Points médicament: {getDrugIntensity}</p>
+                                    <p className="has-text-grey is-size-7 mb-1">Points
+                                        médicament: {getDrugIntensity}</p>
                                 </div>
                             }
 
                         </div>
 
+                        <div className="columns is-mobile is-multiline is-vcentered">
+                            <div className="column is-full-mobile">
+                                <div className="subtle-border-cm">
+                                    <div className="columns is-vcentered">
+                                        <div className="column">
+                                            <p className="has-text-black has-text-weight-semibold" style={{fontSize: "15px"}}> Prise &lt; 6 h avant conduite </p>
+                                            <p className="has-text-grey is-size-7">+4 si oui</p>
+                                        </div>
+                                        <div className="column is-narrow">
+                                            <label className="switch">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={isOn}
+                                                    onChange={(e) => setIsOn(e.target.checked)}
+                                                />
+                                                <span className="slide"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="column is-full-mobile">
+                                <div className="subtle-border-cm ">
+                                    <p className="has-text-black has-text-weight-semibold" style={{fontSize: "15px"}}> Consommation moyenne (verres/jour) </p>
+                                    <input className="input" type="number" defaultValue="0" min="0" step="1"
+                                           onChange={(e) => setWeight(Number(e.target.value))}/>
+
+                                    <p className="has-text-grey is-size-7">Seuil: > 1 verres/j → +3</p>
+                                </div>
+                            </div>
                         </div>
+
+                    </div>
                 </div>
                 <div className="column">
-                <div className="card subtle-border">
+                    <div className="card subtle-border">
                         <div className="columns is-vcentered is-mobile">
                             <div className="column is-1">
                                 <FiInfo className="has-text-weight-bold" size={20}/>
@@ -354,22 +412,22 @@ export function HomePage() {
                                     </div>
                                     <div className="column is-1 pr-2">
                                         <p className="has-text-black has-text-weight-semibold" style={{ fontSize: "15px" }}>
-                                            0
+                                            {pointAge} {/* age*/}
                                         </p>
                                         <p className="has-text-black has-text-weight-semibold" style={{ fontSize: "15px" }}>
-                                            0
+                                            0 {/* IMC*/}
                                         </p>
                                         <p className="has-text-black has-text-weight-semibold" style={{ fontSize: "15px" }}>
-                                            {getDrugIntensity}
+                                            {getDrugIntensity} {/* Médicament*/}
                                         </p>
                                         <p className="has-text-black has-text-weight-semibold" style={{ fontSize: "15px" }}>
-                                            0
+                                            0 {/* Prise > 6h*/}
                                         </p>
                                         <p className="has-text-black has-text-weight-semibold" style={{ fontSize: "15px" }}>
-                                            0
+                                            0 {/* Atteinte hépatique*/}
                                         </p>
                                         <p className="has-text-black has-text-weight-semibold" style={{ fontSize: "15px" }}>
-                                            0
+                                            0 {/* Somnolence au volant (ATCD)*/}
                                         </p>
 
                                     </div>
