@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/somnidrive/static/css/main.9a245415.css",
+    "main.js": "/somnidrive/static/js/main.3ef09081.js",
+    "static/js/453.6748dbf7.chunk.js": "/somnidrive/static/js/453.6748dbf7.chunk.js",
+    "index.html": "/somnidrive/index.html",
+    "main.9a245415.css.map": "/somnidrive/static/css/main.9a245415.css.map",
+    "main.3ef09081.js.map": "/somnidrive/static/js/main.3ef09081.js.map",
+    "453.6748dbf7.chunk.js.map": "/somnidrive/static/js/453.6748dbf7.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9a245415.css",
+    "static/js/main.3ef09081.js"
+  ]
+}
