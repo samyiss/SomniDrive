@@ -1,227 +1,188 @@
 import { FiInfo } from "react-icons/fi";
 import {useEffect, useState} from "react";
 
+
+const RESULTS = [
+    { color: "#23d160", result: "FAIBLE" },
+    { color: "#ffdd57", result: "MODÉRÉ" },
+    { color: "#ff1700", result: "ÉLEVÉ" }
+]
+
+
+const OTHER_DRUGS  = [
+    {
+        id: "benzodiazepine",
+        name: "Benzodiazépine",
+        minDose: 1,
+        maxDose: 4,
+    },
+    {
+        id: "zdrug",
+        name: "Z-drug",
+        minDose: 1,
+        maxDose: 2,
+    },
+    {
+        id: "antidepressant",
+        name: "Antidépresseur sédatif",
+        minDose: 2,
+        maxDose: 4,
+    },
+    {
+        id: "antagoniste",
+        name: "Antagoniste de l'orexine",
+        minDose: 3,
+        maxDose: 4,
+    },
+]
+
+const DRUGS = [
+    {
+        id: "diazepam",
+        name: "Diazépam",
+        brand: "Valium",
+        halfLife: "20–50 h",
+        intensity: 4
+    },
+    {
+        id: "lorazepam",
+        name: "Lorazépam",
+        brand: "Ativan",
+        halfLife: "10–20 h",
+        intensity: 3
+    },
+    {
+        id: "temazepam",
+        name: "Témazépam",
+        brand: "Restoril",
+        halfLife: "8–15 h",
+        intensity: 2
+    },
+    {
+        id: "triazolam",
+        name: "Triazolam",
+        brand: "Halcion",
+        halfLife: "2–5 h",
+        intensity: 1
+    },
+    {
+        id: "zopiclone",
+        name: "Zopiclone",
+        brand: "Imovane",
+        halfLife: "5 h",
+        intensity: 2
+    },
+    {
+        id: "zolpidem",
+        name: "Zolpidem",
+        brand: "Stilnox",
+        halfLife: "2–3 h",
+        intensity: 1
+    },
+    {
+        id: "trazodone",
+        name: "Trazodone",
+        brand: "Desyrel",
+        halfLife: "5–9 h",
+        intensity: 2
+    },
+    {
+        id: "amitriptyline",
+        name: "Amitriptyline",
+        brand: "Elavil",
+        halfLife: "10–50 h",
+        intensity: 4
+    },
+    {
+        id: "mirtazapine",
+        name: "Mirtazapine",
+        brand: "Remeron",
+        halfLife: "20–40 h",
+        intensity: 4
+    },
+    {
+        id: "melatonin",
+        name: "Mélatonine",
+        brand: "—",
+        halfLife: "0.5 h (≈30 min)",
+        intensity: 0
+    },
+    {
+        id: "suvorexant",
+        name: "Suvorexant",
+        brand: "Belsomra",
+        halfLife: "12 h",
+        intensity: 3
+    },
+    {
+        id: "lemborexant",
+        name: "Lemborexant",
+        brand: "Dayvigo",
+        halfLife: "17–19 h",
+        intensity: 4
+    }
+];
+
+
 export function HomePage() {
-
-    const color = "#23d160"; // Bulma's "danger" color
-    const result = "FAIBLE";
-
-    const results = [
-        { color: "#23d160", result: "FAIBLE" },
-        { color: "#ffdd57", result: "MODÉRÉ" },
-        { color: "#ff1700", result: "ÉLEVÉ" }
-    ]
 
     const [isPrise, setIsPrise] = useState(false);
     const [isHepatic, setIsHepatic] = useState(false);
     const [isSleep, setIsSleep] = useState(false);
     const [alcoholIntake, setAlcoholIntake] = useState(0);
 
-    const [pointPrise, setPointPrise] = useState(0);
-    const [pointHepatic, setPointHepatic] = useState(0);
-    const [pointSleep, setPointSleep] = useState(0);
-    const [pointAlcohol, setPointAlcohol] = useState(0);
 
-    useEffect(
-        () => {
-            if (isPrise) setPointPrise(4)
-            else if (!isPrise) setPointPrise(0)
-        }, [isPrise]
-    )
-
-    useEffect(
-        () => {
-            if (isHepatic) setPointHepatic(3)
-            else if (!isHepatic) setPointHepatic(0)
-        }, [isHepatic]
-    )
-
-    useEffect(
-        () => {
-            if (isSleep) setPointSleep(5)
-            else if (!isSleep) setPointSleep(0)
-        }, [isSleep]
-    )
-
-    useEffect(() => {
-        if (alcoholIntake > 1) setPointAlcohol(3)
-        else setPointAlcohol(0)
-    }, [alcoholIntake]);
-
-
-
-    const options = ["Femme", "Homme"];
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState("Femme");
-    
-    const [pointAge, setPointAge] = useState(0);
-    const [pointIMC, setPointIMC] = useState(0);
-    const [pointMedicament, setPointMedicament] = useState(0);
-
-    const [getAge, setAge] = useState(35);
-    const [getHeight, setHeight] = useState(165);
-    const [getWeight, setWeight] = useState(62);
-    const [getIMC, setIMC] = useState(22.8);
-    const [getimcP, setimcP] = useState(0);
+    const [age, setAge] = useState(35);
+    const [height, setHeight] = useState(165);
+    const [weight, setWeight] = useState(62);
+    const [imc, setImc] = useState(22.8);
+    const [imcPoint, setImcPoint] = useState(0);
     const [selectedDrug, setSelectedDrug] = useState("");
 
     const [otherDrug, setOtherDrug] = useState(null);
-
-    const [getDrugIntensity, setDrugIntensity] = useState(4);
-
-
-
-    useEffect(() => {
-        if (getAge < 55) setPointAge(0);
-        else if (getAge < 65) setPointAge(1);
-        else setPointAge(2);
-    }, [getAge]);
-
-
-    const otherDrugs = [
-        {
-            id: "benzodiazepine",
-            name: "Benzodiazépine",
-            minDose: 1,
-            maxDose: 4,
-        },
-        {
-            id: "zdrug",
-            name: "Z-drug",
-            minDose: 1,
-            maxDose: 2,
-        },
-        {
-            id: "antidepressant",
-            name: "Antidépresseur sédatif",
-            minDose: 2,
-            maxDose: 4,
-        },
-        {
-            id: "antagoniste",
-            name: "Antagoniste de l'orexine",
-            minDose: 3,
-            maxDose: 4,
-        },
-    ]
-
-    const drugs = [
-        {
-            id: "diazepam",
-            name: "Diazépam",
-            brand: "Valium",
-            halfLife: "20–50 h",
-            intensity: 4
-        },
-        {
-            id: "lorazepam",
-            name: "Lorazépam",
-            brand: "Ativan",
-            halfLife: "10–20 h",
-            intensity: 3
-        },
-        {
-            id: "temazepam",
-            name: "Témazépam",
-            brand: "Restoril",
-            halfLife: "8–15 h",
-            intensity: 2
-        },
-        {
-            id: "triazolam",
-            name: "Triazolam",
-            brand: "Halcion",
-            halfLife: "2–5 h",
-            intensity: 1
-        },
-        {
-            id: "zopiclone",
-            name: "Zopiclone",
-            brand: "Imovane",
-            halfLife: "5 h",
-            intensity: 2
-        },
-        {
-            id: "zolpidem",
-            name: "Zolpidem",
-            brand: "Stilnox",
-            halfLife: "2–3 h",
-            intensity: 1
-        },
-        {
-            id: "trazodone",
-            name: "Trazodone",
-            brand: "Desyrel",
-            halfLife: "5–9 h",
-            intensity: 2
-        },
-        {
-            id: "amitriptyline",
-            name: "Amitriptyline",
-            brand: "Elavil",
-            halfLife: "10–50 h",
-            intensity: 4
-        },
-        {
-            id: "mirtazapine",
-            name: "Mirtazapine",
-            brand: "Remeron",
-            halfLife: "20–40 h",
-            intensity: 4
-        },
-        {
-            id: "melatonin",
-            name: "Mélatonine",
-            brand: "—",
-            halfLife: "0.5 h (≈30 min)",
-            intensity: 0
-        },
-        {
-            id: "suvorexant",
-            name: "Suvorexant",
-            brand: "Belsomra",
-            halfLife: "12 h",
-            intensity: 3
-        },
-        {
-            id: "lemborexant",
-            name: "Lemborexant",
-            brand: "Dayvigo",
-            halfLife: "17–19 h",
-            intensity: 4
-        }
-    ];
+    const [drugIntensity, setDrugIntensity] = useState(4);
 
 
 
+    const pointAge = age < 55 ? 0 : age < 65 ? 1 : 2;
+    const pointPrise = isPrise ? 4 : 0;
+    const pointHepatic = isHepatic ? 3 : 0;
+    const pointSleep = isSleep ? 5 : 0;
+    const pointAlcohol = alcoholIntake > 1 ? 3 : 0;
+
+
+    const totalPoints =
+        pointAge + imcPoint + drugIntensity + pointPrise +
+        pointAlcohol + pointHepatic + pointSleep;
+
+
+
+    const getResult =
+        totalPoints <= 4 ? RESULTS[0] :
+            totalPoints <= 8 ? RESULTS[1] :
+                RESULTS[2];
 
 
 
     useEffect(() => {
-        const drug = otherDrugs.find(drug => drug.id === selectedDrug) || null
+        const drug = OTHER_DRUGS.find(drug => drug.id === selectedDrug) || null
         setOtherDrug(drug);
-    }, [selectedDrug, otherDrugs]);
+    }, [selectedDrug]);
 
     useEffect(() => {
-        const drug = drugs.find(
+        const drug = DRUGS.find(
             drug => drug.id === selectedDrug
         );
         if (drug) setDrugIntensity(drug.intensity)
-    }, [drugs, selectedDrug]);
+    }, [selectedDrug]);
 
     useEffect(() => {
-        const imc = Number((getWeight / (getHeight / 100) ** 2).toFixed(1));
-        setIMC(imc);
+        const imc = Number((weight / (height / 100) ** 2).toFixed(1));
+        setImc(imc);
 
-        setimcP(getImcPoints(imc));
-    }, [getWeight, getHeight]);
-
-    function getImcPoints(imc) {
-        if (imc >= 18.5 && imc < 25) return 3;
-        if (imc >= 25 && imc < 30) return 1;
-        if (imc >= 30) return 0;
-        return 2;
-    }
+        const calculImc =   imc < 25 ? 0 : imc >= 30 ? 2 : 1;
+        setImcPoint(calculImc);
+    }, [weight, height]);
 
     function resetBtn() {
         setAge(35);
@@ -286,7 +247,7 @@ export function HomePage() {
                                     Âge (années)
                                 </p>
 
-                                <input className="input" type="number" defaultValue={getAge} min="0" step="1"
+                                <input className="input" type="number" value={age} min="0" step="1"
                                        onChange={(e) => setAge(Number(e.target.value))}/>
                                 <p className="has-text-grey is-size-7 mb-1">Points âge: {pointAge}</p>
                             </div>
@@ -297,7 +258,7 @@ export function HomePage() {
                                     Taille (cm)
                                 </p>
 
-                                <input className="input" type="number" defaultValue={getHeight} min="0" step="1"
+                                <input className="input" type="number" value={height} min="0" step="1"
                                        onChange={(e) => setHeight(Number(e.target.value))}/>
                             </div>
 
@@ -306,7 +267,7 @@ export function HomePage() {
                                     Poids (kg)
                                 </p>
 
-                                <input className="input" type="number" defaultValue={getWeight} min="0" step="1"
+                                <input className="input" type="number" value={weight} min="0" step="1"
                                        onChange={(e) => setWeight(Number(e.target.value))}/>
                             </div>
 
@@ -315,8 +276,8 @@ export function HomePage() {
                                     IMC (calculé)
                                 </p>
 
-                                <input className="input" type="number" value={getIMC} readOnly={true}/>
-                                <p className="has-text-grey is-size-7 mb-1">Points IMC: {getimcP}</p>
+                                <input className="input" type="number" value={imc} readOnly={true}/>
+                                <p className="has-text-grey is-size-7 mb-1">Points IMC: {imcPoint}</p>
                             </div>
 
                         </div>
@@ -331,7 +292,7 @@ export function HomePage() {
                                     <div className="select is-fullwidth custom-select pb-1">
                                         <select value={selectedDrug} onChange={(e) => setSelectedDrug(e.target.value)}>
                                             {
-                                                drugs.map((drug) => (
+                                                DRUGS.map((drug) => (
                                                     <option key={drug.id} value={drug.id}>
                                                         {drug.name}
                                                         {drug.brand !== "—" && ` (${drug.brand})`}
@@ -339,7 +300,7 @@ export function HomePage() {
                                                 ))
                                             }
                                             {
-                                                otherDrugs.map((drug) => (
+                                                OTHER_DRUGS.map((drug) => (
                                                     <option key={drug.id} value={drug.id}>
                                                         (Autre) {drug.name} — {drug.brand} choisir intensité
                                                     </option>
@@ -365,11 +326,11 @@ export function HomePage() {
                                             min={otherDrug.minDose}
                                             max={otherDrug.maxDose}
                                             step={1}
-                                            onChange={(e) => setDrugIntensity(e.target.value)}
+                                            onChange={(e) => setDrugIntensity(Number(e.target.value))}
                                         />
                                     }
                                     <p className="has-text-grey is-size-7 mb-1">Points
-                                        médicament: {getDrugIntensity}</p>
+                                        médicament: {drugIntensity}</p>
                                 </div>
                             }
 
@@ -400,7 +361,7 @@ export function HomePage() {
                             <div className="column is-full-mobile">
                                 <div className="subtle-border-sm flex">
                                     <p className="has-text-black has-text-weight-semibold" style={{fontSize: "15px"}}> Consommation moyenne (verres/jour) </p>
-                                    <input className="input" type="number" defaultValue="0" min="0" step="1"
+                                    <input className="input" type="number" value={alcoholIntake} min="0" step="1"
                                            onChange={(e) => setAlcoholIntake(Number(e.target.value))}/>
 
                                     <p className="has-text-grey is-size-7">Seuil: > 1 verres/j → +3</p>
@@ -454,7 +415,7 @@ export function HomePage() {
 
                         <div className="columns is-mobile is-multiline">
                             <div className="column">
-                                <div className="button has-background-grey-lighter" onClick={resetBtn}>
+                                <div className="button has-background-grey-lighter " onClick={resetBtn}>
                                     <p className="has-text-black has-text-weight-semibold">Réinitialiser</p>
                                 </div>
                             </div>
@@ -476,12 +437,12 @@ export function HomePage() {
                         </div>
 
                         <div>
-                            <div className="result" style={{backgroundColor: color}}>
-                                <span className="has-text-white has-text-weight-semibold">
-                                    { result }
-                                </span>
-                            </div>
 
+                                <div className="result" style={{backgroundColor: getResult.color}}>
+                                    <span className="has-text-white has-text-weight-semibold">
+                                        { getResult.result }
+                                    </span>
+                                </div>
 
                                 <div className="columns is-mobile pr-2 pt-5">
                                     <div className="column">
@@ -512,10 +473,10 @@ export function HomePage() {
                                             {pointAge} {/* age*/}
                                         </p>
                                         <p className="has-text-black has-text-weight-semibold" style={{ fontSize: "15px" }}>
-                                            0 {/* IMC*/}
+                                            {imcPoint} {/* IMC*/}
                                         </p>
                                         <p className="has-text-black has-text-weight-semibold" style={{ fontSize: "15px" }}>
-                                            {getDrugIntensity} {/* Médicament*/}
+                                            {drugIntensity} {/* Médicament*/}
                                         </p>
                                         <p className="has-text-black has-text-weight-semibold" style={{ fontSize: "15px" }}>
                                             {pointPrise} {/* Prise > 6h*/}
@@ -563,7 +524,7 @@ export function HomePage() {
 
                 <div className="columns is-multiline is-mobile is-centered">
                     {
-                        drugs.map((drug) => (
+                        DRUGS.map((drug) => (
                             <div className="column is-4-tablet is-3-desktop mb-auto is-5-mobile" key={drug.id}>
                                 <div className="card subtle-border p-3">
                                     <p className="has-text-weight-semibold has-text-black">{drug.name}</p>
