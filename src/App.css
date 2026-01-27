@@ -176,3 +176,12 @@
 .switch input:checked + .slide::before {
   transform: translateX(20px);
 }
+
+
+.button {
+  border: 1px solid rgba(168, 168, 168, 0.35); /* Bulma grey */
+  border-radius: 8px;
+
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+

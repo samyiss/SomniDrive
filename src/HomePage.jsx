@@ -223,6 +223,18 @@ export function HomePage() {
         return 2;
     }
 
+    function resetBtn() {
+        setAge(35);
+        setHeight(165);
+        setWeight(62);
+        setSelectedDrug("diazepam");
+        setIsPrise(false);
+        setIsHepatic(false);
+        setIsSleep(false);
+        setAlcoholIntake(0);
+    }
+
+
     return (
         <main className="p-5 has-background-white-ter">
             <div className="columns pt-6 has-text-centered">
@@ -363,7 +375,7 @@ export function HomePage() {
 
                         </div>
 
-                        <div className="columns is-mobile is-multiline is-flexible">
+                        <div className="columns is-mobile is-multiline">
                             <div className="column is-full-mobile">
                                 <div className="subtle-border-sm flex">
                                     <div className="columns is-vcentered is-mobile">
@@ -396,7 +408,7 @@ export function HomePage() {
                             </div>
                         </div>
 
-                        <div className="columns is-mobile is-multiline is-flexible">
+                        <div className="columns is-mobile is-multiline">
                             <div className="column is-full-mobile">
                                 <div className="subtle-border-sm flex">
                                     <div className="columns is-vcentered is-mobile">
@@ -436,6 +448,14 @@ export function HomePage() {
                                             </label>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="columns is-mobile is-multiline">
+                            <div className="column">
+                                <div className="button has-background-grey-lighter" onClick={resetBtn}>
+                                    <p className="has-text-black has-text-weight-semibold">Réinitialiser</p>
                                 </div>
                             </div>
                         </div>
