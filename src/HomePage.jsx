@@ -3,9 +3,9 @@ import {useEffect, useState} from "react";
 
 
 const RESULTS = [
-    { color: "#23d160", result: "FAIBLE" },
-    { color: "#ffdd57", result: "MODÉRÉ" },
-    { color: "#ff1700", result: "ÉLEVÉ" }
+    { color: "#009966", result: "FAIBLE" },
+    { color: "#fe9a00", result: "MODÉRÉ" },
+    { color: "#fb2c36", result: "ÉLEVÉ" }
 ]
 
 
